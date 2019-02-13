@@ -1,0 +1,14 @@
+{
+  "items": {
+    "1": {
+      "name": "Johnny Fastpants"
+    },
+    "2": {
+      "name": "Joe Slow"
+    },
+    "3": {
+      "name": "Uncle Adam"
+    }
+  },
+  "next_id": 4
+}
