@@ -1,11 +1,26 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
+
 import '../css/App.css'
+
+import { fetchDeliveries } from '../actions/deliveriesAction'
+import { fetchDrivers } from '../actions/driversAction'
 
 class DeliveriesList extends Component {
 
-
+    componentDidMount(){
+        this.props.fetchDeliveries()
+        this.props.fetchDrivers()
+    }
 
     render() {
+
+        const { deliveries, drivers } = this.props
+
+        if ( deliveries === null || drivers === null ){
+            return 'Loading...'
+        }
+
         return (
             <Fragment>
                 <main role="main">
@@ -21,18 +36,19 @@ class DeliveriesList extends Component {
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr>
-                                <th scope="row"> echo $id</th>
-                                <td> echo $delivery->date</td>
-                                <td> echo $delivery->name</td>
-                                <td> echo $drivers->items->name</td>
-                                <td className="text-right">
-                                    <a className="btn btn-outline-primary" href="update.php?id=<?php echo $id; ?>">Edit</a>
-                                    <a className="btn btn-outline-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a>
-                                </td>
-                            </tr>
-
+                            { Object.keys(deliveries).map( (item) => (
+                                <tr key={item}>
+                                    <th scope="row"> {item} </th>
+                                    <td> { deliveries[item].date }</td>
+                                    <td> { deliveries[item].name }</td>
+                                    <td> { drivers[deliveries[item].driver_id].name }</td>
+                                    <td className="text-right">
+                                        <a className="btn btn-outline-primary" href="update.php?id=<?php echo $id; ?>">Edit</a>
+                                        <a className="btn btn-outline-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a>
+                                    </td>
+                                </tr>    
+                                ))
+                            }
                         </tbody>
                     </table>
                 </main>
@@ -41,4 +57,22 @@ class DeliveriesList extends Component {
     }
 }
 
-export default DeliveriesList
+const mapStateToProps = (state) => {
+    return {
+        deliveries: state.deliveries,
+        drivers: state.drivers
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchDeliveries: () => {
+            dispatch( fetchDeliveries() )
+        },
+        fetchDrivers: () => {
+            dispatch( fetchDrivers() )
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeliveriesList)

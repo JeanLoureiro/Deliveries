@@ -38,5 +38,6 @@ if (count($errors) > 0) {
 }
 
 header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
 
 echo json_encode($response);
