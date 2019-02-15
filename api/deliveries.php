@@ -1,5 +1,10 @@
 <?php
 
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+
+
 $drivers = json_decode(file_get_contents('../data/drivers.json'));
 $deliveries = json_decode(file_get_contents('../data/deliveries.json'));
 
@@ -126,6 +131,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         break;
     default:
+        echo $_SERVER['REQUEST_METHOD'];
         header('HTTP/1.0 405 Method Not Allowed');
 
         exit;
@@ -137,7 +143,5 @@ if (count($errors) > 0) {
     $response['errors'] = $errors;
 }
 
-header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: *");
 
 echo json_encode($response);

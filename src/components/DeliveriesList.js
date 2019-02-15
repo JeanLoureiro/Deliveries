@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import '../css/App.css'
 
-import { fetchDeliveries } from '../actions/deliveriesAction'
+import { fetchDeliveries, deleteDelivery } from '../actions/deliveriesAction'
 import { fetchDrivers } from '../actions/driversAction'
 
 class DeliveriesList extends Component {
@@ -11,6 +11,10 @@ class DeliveriesList extends Component {
     componentDidMount(){
         this.props.fetchDeliveries()
         this.props.fetchDrivers()
+    }
+
+    handleDelete = (id) => {
+        this.props.deleteDelivery(id)
     }
 
     render() {
@@ -38,13 +42,13 @@ class DeliveriesList extends Component {
                         <tbody>
                             { Object.keys(deliveries).map( (item) => (
                                 <tr key={item}>
-                                    <th scope="row"> {item} </th>
+                                    <th scope='row'> {item} </th>
                                     <td> { deliveries[item].date }</td>
                                     <td> { deliveries[item].name }</td>
                                     <td> { drivers[deliveries[item].driver_id].name }</td>
-                                    <td className="text-right">
-                                        <a className="btn btn-outline-primary" href="update.php?id=<?php echo $id; ?>">Edit</a>
-                                        <a className="btn btn-outline-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a>
+                                    <td className='text-right'>
+                                        <button className='btn btn-outline-primary'>Edit</button>
+                                        <button className='btn btn-outline-danger' onClick={ () => this.handleDelete(item) }>Delete</button>
                                     </td>
                                 </tr>    
                                 ))
@@ -71,6 +75,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         fetchDrivers: () => {
             dispatch( fetchDrivers() )
+        },
+        deleteDelivery: (id) => {
+            dispatch( deleteDelivery(id) )
         }
     }
 }

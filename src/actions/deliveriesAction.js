@@ -9,6 +9,11 @@ const getDeliveries = (deliveries) => ({
     deliveries
 })
 
+const removeDelivery = (id) => ({
+    type: DELETE_DELIVERIES,
+    id
+})
+
 export function fetchDeliveries() {
     return dispatch => {
         return fetch('http://localhost:8000/api/deliveries.php')
@@ -17,3 +22,21 @@ export function fetchDeliveries() {
             .catch(err => console.log('Error: ', err))
     }
 }
+
+export function deleteDelivery(id) {
+
+    return dispatch => {
+        return fetch(`http://localhost:8000/api/deliveries.php?id=${id}`,{
+            method: 'DELETE',
+            mode: 'cors',
+            headers: {
+                'Access-Control-Allow-Origin':'*',
+                'Content-Type' : 'application/json'
+            }
+        })
+            .then( res => res.json() )
+            .then( () => dispatch( removeDelivery( id ) ) )
+            .catch(err => console.log( 'Could not delete the item: ', err ) )
+    }
+}
+
