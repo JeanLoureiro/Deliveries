@@ -1,6 +1,6 @@
 ## Instructions
 # Setup
-Setup
+
 1. Download​ ​and​ ​extract​ ​the​ ​ZIP​ ​file
 2. If​ ​you​ ​don’t​ ​have​ ​PHP​ ​installed,​ ​install​ ​it​ ​now,​ ​you​ ​will​ ​need​ ​PHP​ ​5.4​ ​or​ ​later
 3. From​ ​the​ ​code​ ​directory​ ​run​ ​​php​ ​-S​ ​localhost:8000
