@@ -130,6 +130,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
 
         break;
+    
+    case 'OPTIONS' :
+
+        break;
+
     default:
         echo $_SERVER['REQUEST_METHOD'];
         header('HTTP/1.0 405 Method Not Allowed');
