@@ -116,16 +116,12 @@ class EditDelivery extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        // deliveries: state.deliveries,
         drivers: state.drivers
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        // getDeliveryToUpdate: (id) => {
-        //     dispatch( getDeliveryToUpdate(id) )
-        // },
         fetchDeliveries: () => {
             dispatch(fetchDeliveries())
         },

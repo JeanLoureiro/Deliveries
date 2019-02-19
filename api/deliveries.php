@@ -32,32 +32,32 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         break;
     case 'POST':
-        if (!isset($_POST['date'])) {
+        if (!isset($body->date)) {
             $errors['date'] = 'Please enter a date';
-        } elseif (!preg_match('/\d{4}\-\d{2}-\d{2}/', $_POST['date'])) {
+        } elseif (!preg_match('/\d{4}\-\d{2}-\d{2}/', $body->date)) {
             $errors['date'] = 'Please enter a valid date';
         } else {
-            $checkDate = date('Y-m-d', strtotime($_POST['date']));
-            if ($checkDate != $_POST['date']) {
+            $checkDate = date('Y-m-d', strtotime($body->date));
+            if ($checkDate != $body->date) {
                 $errors['date'] = 'Please enter a valid date';
             }
         }
 
-        if (!isset($_POST['name']) || empty($_POST['name'])) {
+        if (!isset($body->name) || empty($body->name)) {
             $errors['name'] = 'Please enter a name';
         } else {
-            $checkName = trim($_POST['name']);
+            $checkName = trim($body->name);
 
             if (empty($checkName)) {
                 $errors['name'] = 'Please enter a valid name';
             }
         }
 
-        if (!isset($_POST['driver_id']) || empty($_POST['driver_id'])) {
+        if (!isset($body->driver_id) || empty($body->driver_id)) {
             $errors['driver_id'] = 'Please choose a driver';
-        } elseif (!is_numeric($_POST['driver_id'])) {
+        } elseif (!is_numeric($body->driver_id)) {
             $errors['driver_id'] = 'Please choose a valid driver';
-        } elseif (!isset($drivers->items->{$_POST['driver_id']})) {
+        } elseif (!isset($drivers->items->{$body->driver_id})) {
             $errors['driver_id'] = 'Please choose a valid driver';
         }
 
@@ -67,9 +67,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $id = $deliveries->next_id;
 
             $deliveries->items->{$id} = [
-                'date' => $_POST['date'],
-                'name' => $_POST['name'],
-                'driver_id' => $_POST['driver_id'],
+                'date' => $body->date,
+                'name' => $body->name,
+                'driver_id' => (int)$body->driver_id,
             ];
 
             $deliveries->next_id++;
