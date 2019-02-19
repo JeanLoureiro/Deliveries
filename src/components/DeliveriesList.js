@@ -49,7 +49,7 @@ class DeliveriesList extends Component {
                                 <td> {deliveries[item].name}</td>
                                 <td> {drivers[deliveries[item].driver_id].name}</td>
                                 <td className='text-right'>
-                                    <NavLink to={`/update/${item}`} className='btn btn-outline-primary'>New edit</NavLink>
+                                    <NavLink to={`/update/${item}`} className='btn btn-outline-primary'>Edit</NavLink>
                                     <button className='btn btn-outline-danger' onClick={() => this.handleDelete(item)}>Delete</button>
                                 </td>
                             </tr>
