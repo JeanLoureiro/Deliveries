@@ -1,4 +1,4 @@
-import { FETCH_DELIVERIES, DELETE_DELIVERIES } from '../actions/deliveriesAction'
+import { FETCH_DELIVERIES, DELETE_DELIVERIES, UPDATE_DELIVERIES } from '../actions/deliveriesAction'
 
 export default function deliveries( state = null , action ){
     switch (action.type) {
@@ -16,6 +16,19 @@ export default function deliveries( state = null , action ){
                         return obj
                     }, {})
         
+        case UPDATE_DELIVERIES: 
+                console.log('Action: ', action)
+                console.log('State: ', state)
+
+            return{
+                ...state,
+                [action.id] : {
+                    date: action.delivery.date,
+                    name: action.delivery.name,
+                    driver_id: action.delivery.driver_id
+                }  
+                
+            }
             
         default:
             return state

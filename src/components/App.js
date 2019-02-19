@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom"
+import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom"
 import DeliveriesList from './DeliveriesList'
 import CreateDelivery from './CreateDelivery'
+import UpdateDelivery from './UpdateDelivery'
 
 import '../css/App.css'
 
@@ -24,8 +25,11 @@ class App extends Component {
                         </nav>
                         <h3 className='text-muted'>CartonCloud</h3>
 
-                        <Route exact path='/' component={DeliveriesList} />
-                        <Route path='/create' component={CreateDelivery} />
+                        <Switch>
+                            <Route exact path='/' component={DeliveriesList} />
+                            <Route path='/create' component={CreateDelivery} />
+                            <Route path='/update/:deliveryId' component={UpdateDelivery} />
+                        </Switch>
 
                     </header>
                 </Router>

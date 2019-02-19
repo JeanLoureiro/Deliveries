@@ -94,14 +94,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
 
         if (0 == count($errors)) {
-            if (!isset($body->driver_id) || empty($body->driver_id)) {
+            if (!isset($_GET['driver_id']) || empty($_GET['driver_id'])) {
                 $errors['driver_id'] = 'Missing driver ID';
-            } elseif (!is_numeric($body->driver_id) || !isset($drivers->items->{$body->driver_id})) {
+            } elseif (!is_numeric($_GET['driver_id']) || !isset($drivers->items->{$_GET['driver_id']})) {
                 $errors['driver_id'] = 'Invalid driver ID';
             }
 
             if (0 == count($errors)) {
-                $deliveries->items->{$id}->driver_id = $body->driver_id;
+                $deliveries->items->{$id}->driver_id = (int)$_GET['driver_id'];
 
                 file_put_contents('../data/deliveries.json', json_encode($deliveries));
 
@@ -146,6 +146,7 @@ if (count($errors) > 0) {
     header('HTTP/1.0 400 Bad Request');
 
     $response['errors'] = $errors;
+    $response['body'] = $body;
 }
 
 

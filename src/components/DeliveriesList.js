@@ -1,5 +1,6 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { NavLink } from "react-router-dom"
 
 import '../css/App.css'
 
@@ -8,7 +9,7 @@ import { fetchDrivers } from '../actions/driversAction'
 
 class DeliveriesList extends Component {
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.fetchDeliveries()
         this.props.fetchDrivers()
     }
@@ -21,42 +22,45 @@ class DeliveriesList extends Component {
 
         const { deliveries, drivers } = this.props
 
-        if ( deliveries === null || drivers === null ){
+        if (deliveries === null || drivers === null) {
             return 'Loading...'
         }
 
         return (
-            <Fragment>
-                <main role="main">
-                    <h1>Deliveries</h1>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Driver</th>
-                                <th scope="col">&nbsp;</th>
+
+            <main role="main">
+                <h1>Deliveries</h1>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Driver</th>
+                            <th scope="col">&nbsp;</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {Object.keys(deliveries).map((item) => (
+                            <tr key={item}>
+                                <th scope='row'> {item} </th>
+                                <td> {deliveries[item].date}</td>
+                                <td> {deliveries[item].name}</td>
+                                <td> {drivers[deliveries[item].driver_id].name}</td>
+                                <td className='text-right'>
+                                    <NavLink to={`/update/${item}`} className='btn btn-outline-primary'>New edit</NavLink>
+                                    <button className='btn btn-outline-danger' onClick={() => this.handleDelete(item)}>Delete</button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            { Object.keys(deliveries).map( (item) => (
-                                <tr key={item}>
-                                    <th scope='row'> {item} </th>
-                                    <td> { deliveries[item].date }</td>
-                                    <td> { deliveries[item].name }</td>
-                                    <td> { drivers[deliveries[item].driver_id].name }</td>
-                                    <td className='text-right'>
-                                        <button className='btn btn-outline-primary'>Edit</button>
-                                        <button className='btn btn-outline-danger' onClick={ () => this.handleDelete(item) }>Delete</button>
-                                    </td>
-                                </tr>    
-                                ))
-                            }
-                        </tbody>
-                    </table>
-                </main>
-            </Fragment>
+                        ))
+                        }
+                    </tbody>
+
+
+                </table>
+            </main>
+
         )
     }
 }
@@ -71,13 +75,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchDeliveries: () => {
-            dispatch( fetchDeliveries() )
+            dispatch(fetchDeliveries())
         },
         fetchDrivers: () => {
-            dispatch( fetchDrivers() )
+            dispatch(fetchDrivers())
         },
         deleteDelivery: (id) => {
-            dispatch( deleteDelivery(id) )
+            dispatch(deleteDelivery(id))
         }
     }
 }
