@@ -27,7 +27,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 $response = $deliveries->items->{$id};
             }
         } else {
-            $response = $deliveries->items;
+            $response = $deliveries;
         }
 
         break;

@@ -42,12 +42,12 @@ class DeliveriesList extends Component {
                     </thead>
 
                     <tbody>
-                        {Object.keys(deliveries).map((item) => (
+                        {Object.keys(deliveries.items).map((item) => (
                             <tr key={item}>
                                 <th scope='row'> {item} </th>
-                                <td> {deliveries[item].date}</td>
-                                <td> {deliveries[item].name}</td>
-                                <td> {drivers[deliveries[item].driver_id].name}</td>
+                                <td> {deliveries.items[item].date}</td>
+                                <td> {deliveries.items[item].name}</td>
+                                <td> {drivers[deliveries.items[item].driver_id].name}</td>
                                 <td className='text-right'>
                                     <NavLink to={`/update/${item}`} className='btn btn-outline-primary'>Edit</NavLink>
                                     <button className='btn btn-outline-danger' onClick={() => this.handleDelete(item)}>Delete</button>

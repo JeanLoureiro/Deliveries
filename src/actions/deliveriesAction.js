@@ -4,9 +4,10 @@ export const DELETE_DELIVERIES = 'DELETE_DELIVERIES'
 export const UPDATE_DELIVERIES = 'UPDATE_DELIVERIES'
 
 
-const getDeliveries = (deliveries) => ({
+const getDeliveries = (deliveries, nextId) => ({
     type: FETCH_DELIVERIES,
     deliveries,
+    nextId,
 })
 
 const updateDelivery = (id, delivery) => ({
@@ -30,7 +31,7 @@ export function fetchDeliveries() {
     return dispatch => {
         return fetch('http://localhost:8000/api/deliveries.php')
             .then(res => res.json())
-            .then(deliveries => dispatch(getDeliveries(deliveries)))
+            .then(deliveries => console.log(deliveries) || dispatch(getDeliveries(deliveries.items, deliveries.next_id)))
             .catch(err => console.log('Error: ', err))
     }
 }
@@ -45,6 +46,8 @@ export function deleteDelivery(id) {
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json'
             }
+
+            // TODO: remove extra options above
         })
             .then(res => res.json())
             .then(() => dispatch(removeDelivery(id)))
