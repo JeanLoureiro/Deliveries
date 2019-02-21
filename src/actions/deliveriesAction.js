@@ -32,7 +32,7 @@ export function fetchDeliveries() {
         return fetch('http://localhost:8000/api/deliveries.php')
             .then(res => res.json())
             .then(deliveries => dispatch(getDeliveries(deliveries.items, deliveries.next_id)))
-            .catch(err => console.log('Error: ', err))
+            .catch(err => console.log('Could not fetch items: ', err))
     }
 }
 
@@ -41,13 +41,6 @@ export function deleteDelivery(id) {
     return dispatch => {
         return fetch(`http://localhost:8000/api/deliveries.php?id=${id}`, {
             method: 'DELETE',
-            // mode: 'cors',
-            // headers: {
-            //     'Access-Control-Allow-Origin': '*',
-            //     'Content-Type': 'application/json'
-            // }
-
-            // TODO: remove extra options above
         })
             .then(res => res.json())
             .then(() => console.log('Dispatch ID: ', id) || dispatch(removeDelivery(id)))
@@ -74,13 +67,9 @@ export function addDelivery(delivery) {
     return dispatch => {
         return fetch(`http://localhost:8000/api/deliveries.php`, {
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify(delivery),
         })
-            .then(res => console.log(res) || res.json())
+            .then(res => res.json())
             .then(delivery => dispatch(createDelivery(delivery)))
             .catch(err => console.log('Could not add delivery: ', err))
     }

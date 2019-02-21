@@ -5,15 +5,13 @@ import { fetchDrivers } from '../actions/driversAction'
 import { fetchDeliveries } from '../actions/deliveriesAction'
 import { addDelivery } from '../actions/deliveriesAction'
 
-// let nextIdUpdated = false
-
 class CreateDelivery extends Component {
 
     state = {
         date: '',
         name: '',
         driver_id: 0,
-        // nextId: null
+        nextId: null
     }
 
     handleInputChange = (e) => {
@@ -27,50 +25,24 @@ class CreateDelivery extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-
-        this.props.addDelivery(this.state)
-
-
+        this.props.addDelivery(this.state)    
         this.props.history.push('/')
-
     }
-
-
-    // componentDidUpdate(prevProps, prevState) {
-
-    //     // console.log('Props: ', prevProps)
-    //     // console.log('State: ', prevState)
-
-    //     if (prevProps.deliveries) {
-
-    //         const nextId = parseInt(Object.keys(prevProps.deliveries)[Object.keys(prevProps.deliveries).length - 1]) + 1
-
-    //         // console.log( 'Out: ',  nextId)
-
-    //         // console.log('nextIdUpdated: ', nextIdUpdated)
-    //         // console.log(nextId !== null && nextIdUpdated === false)
-
-
-    //         if (nextId !== null && nextIdUpdated === false) {
-
-    //         // console.log('In: ', nextId)    
-
-    //             this.setState({
-    //                 nextId: nextId
-    //             })
-                
-    //             nextIdUpdated = true
-
-
-    //         }
-    //     }
-        
-    // }
 
 
     componentDidMount() {
         this.props.fetchDrivers()
         this.props.fetchDeliveries()
+
+    }
+
+    componentDidUpdate( prevProps, prevState ){
+
+        if ( prevProps.deliveries && prevProps.deliveries.nextId !== prevState.nextId ){
+            this.setState({
+                nextId: prevProps.deliveries.nextId
+            })
+        }
     }
 
     render() {

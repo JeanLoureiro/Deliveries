@@ -25,9 +25,6 @@ export default function deliveries(state = null, action) {
             }
 
         case DELETE_DELIVERIES:
-            console.log('Delete State: ', state)
-            console.log('Delete Action: ', action)
-            
             return {
                 ...state,
                 items: Object.keys(state.items)
@@ -41,10 +38,14 @@ export default function deliveries(state = null, action) {
         
 
         case ADD_DELIVERIES:
-
             return {
                 ...state,
-                ...action.delivery
+                items: {
+                    ...state.items,
+                    [state.nextId]:{
+                        ...action.delivery
+                    }
+                }
             }
 
         default:
